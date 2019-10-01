@@ -1,0 +1,19 @@
+language: csharp
+mono: none
+os: linux
+dist: xenial
+dotnet: 3.0.100
+
+stages:
+  - name: deploy
+    if: tag IS present AND tag =~ ^(\d+\.)?(\d+\.)?(\*|\d+)$
+
+jobs:
+  include:
+    - stage: deploy
+      name: "Publish to NuGet"
+      script:
+        - cd src/Pyrox.BlazorComponents.DataGrid
+        - dotnet build Pyrox.BlazorComponents.DataGrid.csproj -c Release
+        - dotnet pack Pyrox.BlazorComponents.DataGrid.csproj -c Release
+        - dotnet nuget push bin/Release/Pyrox.BlazorComponents.DataGrid.*.nupkg --api-key $NUGET_API_KEY
