@@ -1,0 +1,29 @@
+﻿@using System.Threading
+
+<input type="text" class="form-control @Class" @oninput="SearchDebounced" />
+
+@code {
+    private string previousSearchQuery = string.Empty;
+    private CancellationTokenSource currentSearchCts;
+
+    [Parameter]
+    public string Class { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnSearch { get; set; }
+
+    async Task SearchDebounced(ChangeEventArgs e)
+    {
+        currentSearchCts?.Cancel();
+        currentSearchCts = new CancellationTokenSource();
+        var thisSearchToken = currentSearchCts.Token;
+
+        await Task.Delay(300);
+        if (!thisSearchToken.IsCancellationRequested && (string)e.Value != previousSearchQuery)
+        {
+            previousSearchQuery = (string)e.Value;
+            await OnSearch.InvokeAsync((string)e.Value);
+        }
+    }
+}
+
