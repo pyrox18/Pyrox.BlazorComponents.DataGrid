@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RazorLangVersion>3.0</RazorLangVersion>
+    <Authors>Haryz Izzudin</Authors>
+    <Company />
+    <Description>An opinionated Blazor data grid component built on top of BlazorStrap.</Description>
+    <PackageProjectUrl>https://github.com/pyrox18/Pyrox.BlazorComponents.DataGrid</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/pyrox18/Pyrox.BlazorComponents.DataGrid</RepositoryUrl>
+    <Copyright>Haryz Izzudin</Copyright>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="BlazorStrap" Version="1.0.103" />
+    <PackageReference Include="JW.Pager" Version="1.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.0.0" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

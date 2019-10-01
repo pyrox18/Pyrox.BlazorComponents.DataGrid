@@ -1,0 +1,80 @@
+﻿@typeparam TItem
+@typeparam TKey
+@inherits DataGridBase<TItem, TKey>
+
+<form class="form-inline mb-2">
+    <div class="form-group">
+        <label for="itemsPerPageSelect" class="mr-sm-2">Items per page:</label>
+        <select id="itemsPerPageSelect" class="custom-select mr-sm-2" @onchange="ShowItemsPerPage">
+            <option selected value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="sortSelect" class="mr-sm-2">Sort by:</label>
+        <select id="sortSelect" class="custom-select mr-sm-2" @onchange="Sort">
+            @foreach (var sortInfo in SortInformation<TKey>.GetSortInformationPairs())
+            {
+                if (sortInfo == currentSort)
+                {
+                    <option selected value="@sortInfo.ToString()">
+                        @($"{sortInfo.Key.ToString()} ({sortInfo.Type.ToString().ToLower()})")
+                    </option>
+                }
+                else
+                {
+                    <option value="@sortInfo.ToString()">
+                        @($"{sortInfo.Key.ToString()} ({sortInfo.Type.ToString().ToLower()})")
+                    </option>
+                }
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label class="mr-sm-2">Search:</label>
+        <SearchBox Class="mr-sm-2" OnSearch="Search" />
+    </div>
+</form>
+
+<BSTable IsResponsive="true">
+    <BSTableHead>
+        <BSTableRow>
+            @GridHeader
+        </BSTableRow>
+    </BSTableHead>
+    <BSTableBody>
+        @if (items is null || isLoading)
+        {
+            <tr>
+                <td colspan="@(Enum.GetNames(typeof(TKey)).Count())">Loading...</td>
+            </tr>
+        }
+        else if (items.Count == 0)
+        {
+            <tr>
+                <td colspan="@(Enum.GetNames(typeof(TKey)).Count())">No data</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var data in items)
+            {
+                <tr>
+                    @GridRow(data)
+                </tr>
+            }
+        }
+    </BSTableBody>
+</BSTable>
+
+@if (!(totalItems is null))
+{
+    <PaginationControls @ref="paginationControls"
+                        TotalItems="(int)totalItems"
+                        StartPage="1"
+                        ItemsPerPage="currentItemsPerPage"
+                        OnPageChange="HandlePageChange" />
+}
+
