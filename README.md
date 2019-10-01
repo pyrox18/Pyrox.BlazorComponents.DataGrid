@@ -12,6 +12,7 @@ Download and install this package from NuGet using the Package Manager Console, 
 PM> Install-Package Pyrox.BlazorComponents.DataGrid
 # OR
 $ dotnet add package Pyrox.BlazorComponents.DataGrid
+```
 
 ## Usage
 
@@ -48,8 +49,8 @@ Then, implement the `IDataGridService<TItem, TKey>` interface, where `TItem` is 
 ```cs
 public class WeatherForecastService : IDataGridService<WeatherForecast, WeatherForecastSortKey>
 {
-	// This should be replaced with your actual data source
-	private readonly List<WeatherForecast> Data = new List<WeatherForecast>();
+    // This should be replaced with your actual data source
+    private readonly List<WeatherForecast> Data = new List<WeatherForecast>();
 
     public async Task<List<WeatherForecast>> GetItemsAsync(
         int pageNumber,
@@ -61,15 +62,15 @@ public class WeatherForecastService : IDataGridService<WeatherForecast, WeatherF
 
         if (!(sortInfo is null))
         {
-			// Add logic for sorting here
+            // Add logic for sorting here
         }
 
         if (!(searchQuery is null))
         {
-			// Add logic for search queries here
+            // Add logic for search queries here
         }
 
-		// Logic for pagination
+        // Logic for pagination
         var items = query.Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToList();
@@ -81,10 +82,10 @@ public class WeatherForecastService : IDataGridService<WeatherForecast, WeatherF
     {
         if (!(searchQuery is null))
         {
-			// Return count for items with search query
+            // Return count for items with search query
         }
 
-		// Otherwise, return count for all items
+        // Otherwise, return count for all items
     }
 }
 ```
