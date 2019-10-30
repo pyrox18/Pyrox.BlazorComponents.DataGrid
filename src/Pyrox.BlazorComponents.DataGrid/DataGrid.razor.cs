@@ -38,6 +38,9 @@ namespace Pyrox.BlazorComponents.DataGrid
         }
 
         [Parameter]
+        public object Parameters { get; set; }
+
+        [Parameter]
         public RenderFragment GridHeader { get; set; }
 
         [Parameter]
@@ -60,7 +63,8 @@ namespace Pyrox.BlazorComponents.DataGrid
                 currentPage,
                 currentItemsPerPage,
                 currentSort,
-                currentSearchQuery);
+                currentSearchQuery,
+                Parameters);
 
             isLoading = false;
         }
@@ -68,7 +72,7 @@ namespace Pyrox.BlazorComponents.DataGrid
         private async Task GetItemCount()
         {
             totalItems = null;
-            totalItems = await DataService.GetItemCountAsync(currentSearchQuery);
+            totalItems = await DataService.GetItemCountAsync(currentSearchQuery, Parameters);
         }
 
         protected async Task HandlePageChange(int page)
