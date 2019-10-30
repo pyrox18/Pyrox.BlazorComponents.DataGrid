@@ -2,6 +2,7 @@ using Pyrox.BlazorComponents.DataGrid.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Pyrox.BlazorComponents.DataGrid.E2ETests.Data
@@ -25,7 +26,8 @@ namespace Pyrox.BlazorComponents.DataGrid.E2ETests.Data
             int pageNumber,
             int pageSize,
             SortInformation<WeatherForecast> sortInfo = null,
-            string searchQuery = null)
+            string searchQuery = null,
+            object parameters = null)
         {
             var query = Data.AsQueryable();
 
@@ -80,6 +82,15 @@ namespace Pyrox.BlazorComponents.DataGrid.E2ETests.Data
                     || f.Summary.ToLower().Contains(searchQueryLowercase));
             }
 
+            if (!(parameters is null))
+            {
+                var type = parameters.GetType();
+                if (!(type.GetProperty(nameof(WeatherForecast.Summary)) is null))
+                {
+                    query = query.Where(f => f.Summary == type.GetProperty(nameof(WeatherForecast.Summary)).GetValue(parameters) as string);
+                }
+            }
+
             var items = query.Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
@@ -87,19 +98,30 @@ namespace Pyrox.BlazorComponents.DataGrid.E2ETests.Data
             return items;
         }
 
-        public async Task<int> GetItemCountAsync(string searchQuery = null)
+        public async Task<int> GetItemCountAsync(
+            string searchQuery = null,
+            object parameters = null)
         {
+            var query = Data.AsQueryable();
             if (!(searchQuery is null))
             {
                 var searchQueryLowercase = searchQuery.ToLower();
-                return Data.Where(f => f.Date.ToString().ToLower().Contains(searchQueryLowercase)
-                    || f.TemperatureC.ToString().Contains(searchQuery)
-                    || f.TemperatureF.ToString().Contains(searchQuery)
-                    || f.Summary.ToLower().Contains(searchQueryLowercase))
-                    .Count();
+                query = query.Where(f => f.Date.ToString().ToLower().Contains(searchQueryLowercase)
+                                    || f.TemperatureC.ToString().Contains(searchQuery)
+                                    || f.TemperatureF.ToString().Contains(searchQuery)
+                                    || f.Summary.ToLower().Contains(searchQueryLowercase));
             }
 
-            return Data.Length;
+            if (!(parameters is null))
+            {
+                var type = parameters.GetType();
+                if (!(type.GetProperty(nameof(WeatherForecast.Summary)) is null))
+                {
+                    query = query.Where(f => f.Summary == type.GetProperty(nameof(WeatherForecast.Summary)).GetValue(parameters) as string);
+                }
+            }
+
+            return query.Count();
         }
     }
 }

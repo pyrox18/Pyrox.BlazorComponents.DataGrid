@@ -9,8 +9,11 @@ namespace Pyrox.BlazorComponents.DataGrid.Interfaces
             int pageNumber,
             int pageSize,
             SortInformation<TItem> sortInfo = null,
-            string searchQuery = null);
+            string searchQuery = null,
+            object parameters = null);
 
-        Task<int> GetItemCountAsync(string searchQuery = null);
+        Task<int> GetItemCountAsync(
+            string searchQuery = null,
+            object parameters = null);
     }
 }

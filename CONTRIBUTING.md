@@ -8,9 +8,9 @@ Feel free to open a new issue in the [issue tracker](https://github.com/pyrox18/
 
 ## Directly modifying the source code
 
-This repository utilises the [Gitflow branching model](https://nvie.com/posts/a-successful-git-branching-model/), so it helps if you're familiar with it.
+This repository utilises the [OneFlow branching model](https://www.endoflineblog.com/oneflow-a-git-branching-model-and-workflow), so it helps if you're familiar with it.
 
-If you're interested in making changes to the code yourself, fork the repository and make the changes on your fork. Then, open a pull request targeting the dev branch (**NOT** the master branch) with some details about the changes that you have made.
+If you're interested in making changes to the code yourself, fork the repository and make the changes on your fork. Then, open a pull request targeting the master branch with some details about the changes that you have made.
 
 ### General Guidelines
 

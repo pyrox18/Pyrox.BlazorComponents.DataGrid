@@ -44,7 +44,8 @@ public class WeatherForecastService : IDataGridService<WeatherForecast>
         int pageNumber,
         int pageSize,
         SortInformation<WeatherForecast> sortInfo = null,
-        string searchQuery = null)
+        string searchQuery = null,
+		object parameters = null)
     {
         var query = Data.AsQueryable();
 
@@ -58,6 +59,11 @@ public class WeatherForecastService : IDataGridService<WeatherForecast>
             // Add logic for search queries here
         }
 
+		if (!(parameters is null))
+		{
+			// Add logic for parameter handling here
+		}
+
         // Logic for pagination
         var items = query.Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
@@ -66,14 +72,23 @@ public class WeatherForecastService : IDataGridService<WeatherForecast>
         return items;
     }
 
-    public async Task<int> GetItemCountAsync(string searchQuery = null)
+    public async Task<int> GetItemCountAsync(
+		string searchQuery = null,
+		object parameters = null)
     {
+		var query = Data.AsQueryable();
+
         if (!(searchQuery is null))
         {
-            // Return count for items with search query
+            // Add logic for search queries here
         }
 
-        // Otherwise, return count for all items
+		if (!(parameters is null))
+		{
+			// Add logic for parameter handling here
+		}
+
+        return query.Count();
     }
 }
 ```
@@ -92,7 +107,8 @@ Finally, use the `DataGrid` component in your Razor pages.
 <h1>Weather Forecast</h1>
 
 <DataGrid TItem="WeatherForecast"
-          DefaultSort="SortInformation<WeatherForecastSortKey>.SortAscending(WeatherForecastSortKey.Date)">
+          DefaultSort="SortInformation<WeatherForecastSortKey>.SortAscending(WeatherForecastSortKey.Date)"
+		  Parameters="parameters">
     <GridHeader>
         <th>Date</th>
         <th>Temperature (C)</th>
@@ -106,9 +122,20 @@ Finally, use the `DataGrid` component in your Razor pages.
         <td>@context.Summary</td>
     </GridRow>
 </DataGrid>
+
+@code {
+	private object parameters = new
+	{
+		Summary = "Balmy"
+	}
+}
 ```
 
-Supply the `TItem` type parameter when declaring the component. You can also optionally supply a `DefaultSort` parameter that determines the default sort order for the fetched items. Use the `SortInformation<TItem>.SortAscending` or `SortInformation<TItem>.SortDescending` static methods to quickly get the `SortInformation<TKey>` instance that you want.
+Supply the `TItem` type parameter when declaring the component. 
+
+The following parameters are optional:
+- `DefaultSort`: Determines the default sort order for the fetched items. Use the `SortInformation<TItem>.SortAscending` or `SortInformation<TItem>.SortDescending` static methods to quickly get the `SortInformation<TItem>` instance that you want.
+- `Parameters`: Parameters that you want to filter the results by. For example, supply an `OrderId` as a parameter and only fetch order items related to that `OrderId`. You are responsible for handling the presence/absence of these parameters in your `IDataGridService` implementation.
 
 # Contributing
 
