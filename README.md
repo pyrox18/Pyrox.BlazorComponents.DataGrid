@@ -107,7 +107,7 @@ Finally, use the `DataGrid` component in your Razor pages.
 <h1>Weather Forecast</h1>
 
 <DataGrid TItem="WeatherForecast"
-          DefaultSort="SortInformation<WeatherForecastSortKey>.SortAscending(WeatherForecastSortKey.Date)"
+          DefaultSort="SortInformation<WeatherForecast>.SortAscending(f => f.Date)"
           Parameters="parameters">
     <GridHeader>
         <th>Date</th>
