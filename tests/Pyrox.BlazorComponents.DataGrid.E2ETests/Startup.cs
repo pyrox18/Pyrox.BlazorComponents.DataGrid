@@ -30,7 +30,7 @@ namespace Pyrox.BlazorComponents.DataGrid.E2ETests
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
-            services.AddScoped<IDataGridService<WeatherForecast, WeatherForecastSortKey>, WeatherForecastService>();
+            services.AddScoped<IDataGridService<WeatherForecast>, WeatherForecastService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
