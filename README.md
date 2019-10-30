@@ -45,7 +45,7 @@ public class WeatherForecastService : IDataGridService<WeatherForecast>
         int pageSize,
         SortInformation<WeatherForecast> sortInfo = null,
         string searchQuery = null,
-		object parameters = null)
+        object parameters = null)
     {
         var query = Data.AsQueryable();
 
@@ -59,10 +59,10 @@ public class WeatherForecastService : IDataGridService<WeatherForecast>
             // Add logic for search queries here
         }
 
-		if (!(parameters is null))
-		{
-			// Add logic for parameter handling here
-		}
+        if (!(parameters is null))
+        {
+            // Add logic for parameter handling here
+        }
 
         // Logic for pagination
         var items = query.Skip((pageNumber - 1) * pageSize)
@@ -73,20 +73,20 @@ public class WeatherForecastService : IDataGridService<WeatherForecast>
     }
 
     public async Task<int> GetItemCountAsync(
-		string searchQuery = null,
-		object parameters = null)
+        string searchQuery = null,
+        object parameters = null)
     {
-		var query = Data.AsQueryable();
+        var query = Data.AsQueryable();
 
         if (!(searchQuery is null))
         {
             // Add logic for search queries here
         }
 
-		if (!(parameters is null))
-		{
-			// Add logic for parameter handling here
-		}
+        if (!(parameters is null))
+        {
+            // Add logic for parameter handling here
+        }
 
         return query.Count();
     }
@@ -108,7 +108,7 @@ Finally, use the `DataGrid` component in your Razor pages.
 
 <DataGrid TItem="WeatherForecast"
           DefaultSort="SortInformation<WeatherForecastSortKey>.SortAscending(WeatherForecastSortKey.Date)"
-		  Parameters="parameters">
+          Parameters="parameters">
     <GridHeader>
         <th>Date</th>
         <th>Temperature (C)</th>
@@ -124,10 +124,10 @@ Finally, use the `DataGrid` component in your Razor pages.
 </DataGrid>
 
 @code {
-	private object parameters = new
-	{
-		Summary = "Balmy"
-	}
+    private object parameters = new
+    {
+        Summary = "Balmy"
+    }
 }
 ```
 
