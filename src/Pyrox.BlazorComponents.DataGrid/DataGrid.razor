@@ -1,6 +1,5 @@
 ﻿@typeparam TItem
-@typeparam TKey
-@inherits DataGridBase<TItem, TKey>
+@inherits DataGridBase<TItem>
 
 <form class="form-inline mb-2">
     <div class="form-group">
@@ -15,7 +14,7 @@
     <div class="form-group">
         <label for="sortSelect" class="mr-sm-2">Sort by:</label>
         <select id="sortSelect" class="custom-select mr-sm-2" @onchange="Sort">
-            @foreach (var sortInfo in SortInformation<TKey>.GetSortInformationPairs())
+            @foreach (var sortInfo in SortInformation<TItem>.GetSortInformationPairs())
             {
                 if (sortInfo == currentSort)
                 {
@@ -48,13 +47,13 @@
         @if (items is null || isLoading)
         {
             <tr>
-                <td colspan="@(Enum.GetNames(typeof(TKey)).Count())">Loading...</td>
+                <td colspan="@(Enum.GetNames(typeof(TItem)).Count())">Loading...</td>
             </tr>
         }
         else if (items.Count == 0)
         {
             <tr>
-                <td colspan="@(Enum.GetNames(typeof(TKey)).Count())">No data</td>
+                <td colspan="@(Enum.GetNames(typeof(TItem)).Count())">No data</td>
             </tr>
         }
         else

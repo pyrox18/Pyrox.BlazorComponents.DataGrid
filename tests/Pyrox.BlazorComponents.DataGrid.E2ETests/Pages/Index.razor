@@ -4,8 +4,7 @@
 <h1>Weather Forecast</h1>
 
 <DataGrid TItem="WeatherForecast"
-          TKey="WeatherForecastSortKey"
-          DefaultSort="SortInformation<WeatherForecastSortKey>.SortAscending(WeatherForecastSortKey.Date)">
+          DefaultSort="SortInformation<WeatherForecast>.SortAscending(forecast => forecast.Date)">
     <GridHeader>
         <th>Date</th>
         <th>Temperature (C)</th>

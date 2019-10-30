@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Pyrox.BlazorComponents.DataGrid
 {
-    public class DataGridBase<TItem, TKey> : ComponentBase
+    public class DataGridBase<TItem> : ComponentBase
     {
-        [Inject] public IDataGridService<TItem, TKey> DataService { get; set; }
+        [Inject] public IDataGridService<TItem> DataService { get; set; }
 
         protected List<TItem> items;
         protected int? totalItems;
@@ -16,15 +16,15 @@ namespace Pyrox.BlazorComponents.DataGrid
         protected bool isSaving = false;
 
         private int currentPage = 1;
-        protected SortInformation<TKey> currentSort = null;
-        private SortInformation<TKey> defaultSort;
+        protected SortInformation<TItem> currentSort = null;
+        private SortInformation<TItem> defaultSort;
         private string currentSearchQuery = string.Empty;
         protected int currentItemsPerPage = 10;
 
         protected PaginationControls paginationControls;
 
         [Parameter]
-        public SortInformation<TKey> DefaultSort
+        public SortInformation<TItem> DefaultSort
         {
             get
             {
@@ -82,11 +82,11 @@ namespace Pyrox.BlazorComponents.DataGrid
 
         protected void Sort(ChangeEventArgs e)
         {
-            currentSort = new SortInformation<TKey>((string)e.Value);
+            currentSort = new SortInformation<TItem>((string)e.Value);
             paginationControls.GoToPage(1);
         }
 
-        protected void Sort(SortInformation<TKey> sortInformation)
+        protected void Sort(SortInformation<TItem> sortInformation)
         {
             currentSort = sortInformation;
             paginationControls.GoToPage(1);

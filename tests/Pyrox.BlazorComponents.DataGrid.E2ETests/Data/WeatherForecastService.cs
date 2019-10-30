@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pyrox.BlazorComponents.DataGrid.E2ETests.Data
 {
-    public class WeatherForecastService : IDataGridService<WeatherForecast, WeatherForecastSortKey>
+    public class WeatherForecastService : IDataGridService<WeatherForecast>
     {
         private static readonly string[] Summaries = new[]
         {
@@ -24,7 +24,7 @@ namespace Pyrox.BlazorComponents.DataGrid.E2ETests.Data
         public async Task<List<WeatherForecast>> GetItemsAsync(
             int pageNumber,
             int pageSize,
-            SortInformation<WeatherForecastSortKey> sortInfo = null,
+            SortInformation<WeatherForecast> sortInfo = null,
             string searchQuery = null)
         {
             var query = Data.AsQueryable();
@@ -35,17 +35,17 @@ namespace Pyrox.BlazorComponents.DataGrid.E2ETests.Data
                 {
                     switch (sortInfo.Key)
                     {
-                        case WeatherForecastSortKey.Date:
+                        case nameof(WeatherForecast.Date):
                         default:
                             query = query.OrderBy(f => f.Date);
                             break;
-                        case WeatherForecastSortKey.TemperatureC:
+                        case nameof(WeatherForecast.TemperatureC):
                             query = query.OrderBy(f => f.TemperatureC);
                             break;
-                        case WeatherForecastSortKey.TemperatureF:
+                        case nameof(WeatherForecast.TemperatureF):
                             query = query.OrderBy(f => f.TemperatureF);
                             break;
-                        case WeatherForecastSortKey.Summary:
+                        case nameof(WeatherForecast.Summary):
                             query = query.OrderBy(f => f.Summary);
                             break;
                     }
@@ -54,17 +54,17 @@ namespace Pyrox.BlazorComponents.DataGrid.E2ETests.Data
                 {
                     switch (sortInfo.Key)
                     {
-                        case WeatherForecastSortKey.Date:
+                        case nameof(WeatherForecast.Date):
                         default:
                             query = query.OrderByDescending(f => f.Date);
                             break;
-                        case WeatherForecastSortKey.TemperatureC:
+                        case nameof(WeatherForecast.TemperatureC):
                             query = query.OrderByDescending(f => f.TemperatureC);
                             break;
-                        case WeatherForecastSortKey.TemperatureF:
+                        case nameof(WeatherForecast.TemperatureF):
                             query = query.OrderByDescending(f => f.TemperatureF);
                             break;
-                        case WeatherForecastSortKey.Summary:
+                        case nameof(WeatherForecast.Summary):
                             query = query.OrderByDescending(f => f.Summary);
                             break;
                     }
