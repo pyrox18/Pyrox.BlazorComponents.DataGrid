@@ -1,10 +1,11 @@
-﻿@page "/"
+﻿@page "/parameters"
 @using Pyrox.BlazorComponents.DataGrid.E2ETests.Data
 
-<h1>Weather Forecast</h1>
+<h1>Weather Forecast with Summary Parameter</h1>
 
 <DataGrid TItem="WeatherForecast"
-          DefaultSort="SortInformation<WeatherForecast>.SortAscending(forecast => forecast.Date)">
+          DefaultSort="SortInformation<WeatherForecast>.SortAscending(forecast => forecast.Date)"
+          Parameters="parameters">
     <GridHeader>
         <th>Date</th>
         <th>Temperature (C)</th>
@@ -18,3 +19,10 @@
         <td>@context.Summary</td>
     </GridRow>
 </DataGrid>
+
+@code {
+    private object parameters = new
+    {
+        Summary = "Balmy"
+    };
+}
