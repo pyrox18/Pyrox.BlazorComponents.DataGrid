@@ -1,4 +1,6 @@
-﻿@typeparam TItem
+﻿@using Humanizer
+@using Pyrox.BlazorComponents.DataGrid.Attributes
+@typeparam TItem
 @inherits DataGridBase<TItem>
 
 <form class="form-inline mb-2">
@@ -16,16 +18,28 @@
         <select id="sortSelect" class="custom-select mr-sm-2" @onchange="Sort">
             @foreach (var sortInfo in SortInformation<TItem>.GetSortInformationPairs())
             {
+                var keyDisplayName = sortInfo.Key.Humanize(LetterCasing.Title);
+
+                var attributes = typeof(TItem).GetProperty(sortInfo.Key).GetCustomAttributes(true);
+                foreach (var attr in attributes)
+                {
+                    SortKeyDisplayNameAttribute displayNameAttribute = attr as SortKeyDisplayNameAttribute;
+                    if (!(displayNameAttribute is null))
+                    {
+                        keyDisplayName = displayNameAttribute.DisplayName;
+                    }
+                }
+
                 if (sortInfo == currentSort)
                 {
                     <option selected value="@sortInfo.ToString()">
-                        @($"{sortInfo.Key.ToString()} ({sortInfo.Type.ToString().ToLower()})")
+                        @($"{keyDisplayName} ({sortInfo.Type.ToString().ToLower()})")
                     </option>
                 }
                 else
                 {
                     <option value="@sortInfo.ToString()">
-                        @($"{sortInfo.Key.ToString()} ({sortInfo.Type.ToString().ToLower()})")
+                        @($"{keyDisplayName} ({sortInfo.Type.ToString().ToLower()})")
                     </option>
                 }
             }

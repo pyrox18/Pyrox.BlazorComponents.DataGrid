@@ -18,6 +18,8 @@ $ dotnet add package Pyrox.BlazorComponents.DataGrid
 
 **NOTE:** This component is built and tested with Blazor Server only. This component is not guaranteed to work with other versions of Blazor, such as Blazor WebAssembly.
 
+### General usage (with example)
+
 The instructions here are based on the weather forecast service provided in the default Blazor Server template. The code can be found in `tests/Pyrox.BlazorComponents.DataGrid.E2ETests`.
 
 Assuming we have the following `WeatherForecast` entity:
@@ -120,6 +122,25 @@ Supply the `TItem` type parameter when declaring the component.
 The following parameters are optional:
 - `DefaultSort`: Determines the default sort order for the fetched items. Use the `SortInformation<TItem>.SortAscending` or `SortInformation<TItem>.SortDescending` static methods to quickly get the `SortInformation<TItem>` instance that you want.
 - `Parameters`: Parameters that you want to filter the results by. For example, supply an `OrderId` as a parameter and only fetch order items related to that `OrderId`. You are responsible for handling the presence/absence of these parameters in your `IDataGridService` implementation.
+
+### Customise sort key display name
+
+By default, the sort dropdown gets its key names from the property names of `TItem` and converts them into title case. If you would like to provide your own sort key display name, you can use the `SortKeyDisplayName` attribute on your `TItem` class properties.
+
+```cs
+public class WeatherForecast
+{
+    public DateTime Date { get; set; }
+
+    [SortKeyDisplayName("Temperature (C)")]
+    public int TemperatureC { get; set; }
+
+    [SortKeyDisplayName("Temperature (F)")]
+    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+
+    public string Summary { get; set; }
+}
+```
 
 # Contributing
 
