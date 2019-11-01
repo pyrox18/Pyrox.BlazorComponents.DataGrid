@@ -1,4 +1,5 @@
-﻿@typeparam TItem
+﻿@using Humanizer
+@typeparam TItem
 @inherits DataGridBase<TItem>
 
 <form class="form-inline mb-2">
@@ -19,13 +20,13 @@
                 if (sortInfo == currentSort)
                 {
                     <option selected value="@sortInfo.ToString()">
-                        @($"{sortInfo.Key.ToString()} ({sortInfo.Type.ToString().ToLower()})")
+                        @($"{sortInfo.Key.Humanize(LetterCasing.Title)} ({sortInfo.Type.ToString().ToLower()})")
                     </option>
                 }
                 else
                 {
                     <option value="@sortInfo.ToString()">
-                        @($"{sortInfo.Key.ToString()} ({sortInfo.Type.ToString().ToLower()})")
+                        @($"{sortInfo.Key.Humanize(LetterCasing.Title)} ({sortInfo.Type.ToString().ToLower()})")
                     </option>
                 }
             }

@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="BlazorStrap" Version="1.0.103" />
+    <PackageReference Include="Humanizer.Core" Version="2.7.9" />
     <PackageReference Include="JW.Pager" Version="1.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.0.0" />
