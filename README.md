@@ -40,7 +40,7 @@ public class WeatherForecastService : IDataGridService<WeatherForecast>
     // This should be replaced with your actual data source
     private readonly List<WeatherForecast> Data = new List<WeatherForecast>();
 
-    public async Task<List<WeatherForecast>> GetItemsAsync(
+    public async Task<DataGridResult<WeatherForecast>> GetItemsAsync(
         int pageNumber,
         int pageSize,
         SortInformation<WeatherForecast> sortInfo = null,
@@ -64,31 +64,15 @@ public class WeatherForecastService : IDataGridService<WeatherForecast>
             // Add logic for parameter handling here
         }
 
+        // Get total item count before performing pagination
+        var totalItems = (uint)query.Count();
+
         // Logic for pagination
         var items = query.Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToList();
 
-        return items;
-    }
-
-    public async Task<int> GetItemCountAsync(
-        string searchQuery = null,
-        object parameters = null)
-    {
-        var query = Data.AsQueryable();
-
-        if (!(searchQuery is null))
-        {
-            // Add logic for search queries here
-        }
-
-        if (!(parameters is null))
-        {
-            // Add logic for parameter handling here
-        }
-
-        return query.Count();
+        return new DataGridResult<WeatherForecast>(items, totalItems);
     }
 }
 ```
