@@ -44,21 +44,21 @@
         </BSTableRow>
     </BSTableHead>
     <BSTableBody>
-        @if (items is null || isLoading)
+        @if (result is null || isLoading)
         {
             <tr>
-                <td colspan="@(Enum.GetNames(typeof(TItem)).Count())">Loading...</td>
+                <td colspan="@(typeof(TItem).GetProperties().Length)">Loading...</td>
             </tr>
         }
-        else if (items.Count == 0)
+        else if (result.TotalItems == 0)
         {
             <tr>
-                <td colspan="@(Enum.GetNames(typeof(TItem)).Count())">No data</td>
+                <td colspan="@(typeof(TItem).GetProperties().Length)">No data</td>
             </tr>
         }
         else
         {
-            foreach (var data in items)
+            foreach (var data in result.Data)
             {
                 <tr>
                     @GridRow(data)
@@ -68,12 +68,11 @@
     </BSTableBody>
 </BSTable>
 
-@if (!(totalItems is null))
+@if (!(result is null))
 {
     <PaginationControls @ref="paginationControls"
-                        TotalItems="(int)totalItems"
+                        TotalItems="(int)result.TotalItems"
                         StartPage="1"
                         ItemsPerPage="currentItemsPerPage"
                         OnPageChange="HandlePageChange" />
 }
-

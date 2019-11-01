@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Pyrox.BlazorComponents.DataGrid.Components;
 using Pyrox.BlazorComponents.DataGrid.Interfaces;
-using System.Collections.Generic;
+using Pyrox.BlazorComponents.DataGrid.Models;
 using System.Threading.Tasks;
 
 namespace Pyrox.BlazorComponents.DataGrid
@@ -10,8 +10,7 @@ namespace Pyrox.BlazorComponents.DataGrid
     {
         [Inject] public IDataGridService<TItem> DataService { get; set; }
 
-        protected List<TItem> items;
-        protected int? totalItems;
+        protected DataGridResult<TItem> result;
         protected bool isLoading = false;
         protected bool isSaving = false;
 
@@ -48,18 +47,14 @@ namespace Pyrox.BlazorComponents.DataGrid
 
         protected override async Task OnInitializedAsync()
         {
-            await Task.WhenAll(new[]
-            {
-                GetItems(),
-                GetItemCount()
-            });
+            await GetItems();
         }
 
         private async Task GetItems()
         {
             isLoading = true;
 
-            items = await DataService.GetItemsAsync(
+            result = await DataService.GetItemsAsync(
                 currentPage,
                 currentItemsPerPage,
                 currentSort,
@@ -67,12 +62,6 @@ namespace Pyrox.BlazorComponents.DataGrid
                 Parameters);
 
             isLoading = false;
-        }
-
-        private async Task GetItemCount()
-        {
-            totalItems = null;
-            totalItems = await DataService.GetItemCountAsync(currentSearchQuery, Parameters);
         }
 
         protected async Task HandlePageChange(int page)
@@ -99,7 +88,6 @@ namespace Pyrox.BlazorComponents.DataGrid
         protected async Task Search(string query)
         {
             currentSearchQuery = query;
-            await GetItemCount();
             paginationControls.GoToPage(1);
         }
 
